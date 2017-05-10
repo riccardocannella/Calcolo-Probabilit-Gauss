@@ -23,7 +23,11 @@ namespace Calcolo_Valori_Gauss
             {
                 risultato = EseguiParsing();
                 TextView TxtRisultato = FindViewById<TextView>(Resource.Id.txtRisultato);
-                TxtRisultato.Text = risultato.ToString();
+                //Se il risultato esiste stampalo altrimenti no
+                if (!risultato.ToString().Equals("NaN"))
+                    TxtRisultato.Text = risultato.ToString();
+                else
+                    TxtRisultato.Text = "";
             };
         }
 
@@ -35,6 +39,9 @@ namespace Calcolo_Valori_Gauss
             EditText B = FindViewById<EditText>(Resource.Id.txtB);
             double.TryParse(B.Text, out double b);
 
+            if (a > b)
+                MessaggioDiErrore("Estremo sinistro maggiore dell'estremo destro");
+
             EditText Mu = FindViewById<EditText>(Resource.Id.txtMu);
             double.TryParse(Mu.Text, out double mu);
 
@@ -42,6 +49,21 @@ namespace Calcolo_Valori_Gauss
             double.TryParse(Sigma.Text, out double sigma);
 
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
+        }
+
+        private void MessaggioDiErrore(string stringa)
+        {
+            new AlertDialog.Builder(this)
+                .SetTitle("Attenzione")
+                .SetMessage(stringa)
+                .SetNeutralButton("Ok",(senderAlert, args) => {
+                    FindViewById<EditText>(Resource.Id.txtA).Text = "";
+                    FindViewById<EditText>(Resource.Id.txtB).Text = "";
+                    FindViewById<EditText>(Resource.Id.txtSigma).Text = "";
+                    FindViewById<EditText>(Resource.Id.txtMu).Text = "";
+                })
+                .Show();
+             
         }
     }
 }
