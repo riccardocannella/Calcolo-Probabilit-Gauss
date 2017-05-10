@@ -47,6 +47,8 @@ namespace Calcolo_Valori_Gauss
 
             EditText Sigma = FindViewById<EditText>(Resource.Id.txtSigma);
             double.TryParse(Sigma.Text, out double sigma);
+            if(sigma == 0)
+                MessaggioDiErrore("σ non può essere uguale a 0");
 
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
         }
@@ -63,7 +65,6 @@ namespace Calcolo_Valori_Gauss
                     FindViewById<EditText>(Resource.Id.txtMu).Text = "";
                 })
                 .Show();
-             
         }
     }
 }
