@@ -2,6 +2,7 @@
 using Android.Widget;
 using Android.OS;
 using System;
+using Android.Content;
 
 namespace Calcolo_Valori_Gauss
 {
@@ -23,6 +24,13 @@ namespace Calcolo_Valori_Gauss
                 risultato = EseguiParsing();
                 TextView TxtRisultato = FindViewById<TextView>(Resource.Id.txtRisultato);
                 TxtRisultato.Text = risultato.ToString();
+            };
+
+            Button btn = FindViewById<Button>(Resource.Id.button1);
+            btn.Click += (object sender, EventArgs e) =>
+            {
+                var intent = new Intent(this, typeof(GraphLayoutActivity));
+                StartActivity(intent);
             };
         }
 

@@ -82,4 +82,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtRisultato"
         android:visibility="visible" />
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1" />
 </LinearLayout>
