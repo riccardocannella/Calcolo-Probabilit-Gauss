@@ -81,5 +81,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtRisultato"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:textColor="@android:color/holo_red_light" />
 </LinearLayout>

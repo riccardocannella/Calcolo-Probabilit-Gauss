@@ -34,22 +34,50 @@ namespace Calcolo_Valori_Gauss
         private double EseguiParsing()
         {
             EditText A = FindViewById<EditText>(Resource.Id.txtA);
-            double.TryParse(A.Text, out double a);
-
             EditText B = FindViewById<EditText>(Resource.Id.txtB);
+            EditText Mu = FindViewById<EditText>(Resource.Id.txtMu);
+            EditText Sigma = FindViewById<EditText>(Resource.Id.txtSigma);
+
+            if(A.Text.Equals("") || B.Text.Equals(""))
+            {
+                MessaggioDiErrore("Inserire valori mancanti");
+                return Double.NaN;
+            }
+
+
+            double.TryParse(A.Text, out double a);
             double.TryParse(B.Text, out double b);
 
             if (a > b)
+            {
+                FindViewById<EditText>(Resource.Id.txtA).Text = "";
+                FindViewById<EditText>(Resource.Id.txtB).Text = "";
                 MessaggioDiErrore("Estremo sinistro maggiore dell'estremo destro");
+                return Double.NaN;
+            }
+                
 
-            EditText Mu = FindViewById<EditText>(Resource.Id.txtMu);
+            
             double.TryParse(Mu.Text, out double mu);
+            if (Mu.Text.Equals(""))
+            {
+                mu = 0;
+            }
 
-            EditText Sigma = FindViewById<EditText>(Resource.Id.txtSigma);
             double.TryParse(Sigma.Text, out double sigma);
+            if(Sigma.Text.Equals(""))
+            {
+                sigma = 1;
+            }
             if(sigma == 0)
+            {
+                FindViewById<EditText>(Resource.Id.txtSigma).Text = "";
                 MessaggioDiErrore("σ non può essere uguale a 0");
+                return Double.NaN;
+            }
+                
 
+            
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
         }
 
@@ -59,10 +87,7 @@ namespace Calcolo_Valori_Gauss
                 .SetTitle("Attenzione")
                 .SetMessage(stringa)
                 .SetNeutralButton("Ok",(senderAlert, args) => {
-                    FindViewById<EditText>(Resource.Id.txtA).Text = "";
-                    FindViewById<EditText>(Resource.Id.txtB).Text = "";
-                    FindViewById<EditText>(Resource.Id.txtSigma).Text = "";
-                    FindViewById<EditText>(Resource.Id.txtMu).Text = "";
+                    //Non Fare niente
                 })
                 .Show();
         }
