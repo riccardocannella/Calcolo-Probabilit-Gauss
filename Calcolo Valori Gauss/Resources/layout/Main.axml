@@ -42,7 +42,7 @@
         android:layout_height="25dp"
         android:id="@+id/space1" />
     <TextView
-        android:text="Media e Varianza"
+        android:text="Media e Scarto Quadratico Medio"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtMu" />
     <TextView
-        android:text="σ²"
+        android:text="σ"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
