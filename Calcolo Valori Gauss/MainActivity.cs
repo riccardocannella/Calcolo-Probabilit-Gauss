@@ -10,6 +10,7 @@ namespace Calcolo_Valori_Gauss
     {
         protected override void OnCreate(Bundle bundle)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             base.OnCreate(bundle);
             //<application android:label="Calcolo Valori Gauss" android:theme="@android:style/Theme.Material.Light.LightStatusBar"></application>
             // Set our view from the "main" layout resource
