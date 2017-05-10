@@ -17,10 +17,7 @@ namespace Calcolo_Valori_Gauss
     {
         public static double CalcolaIntegrale(double a, double b, double sigma = 1, double mu = 0)
         {
-            double piGreco = Math.PI;
-
-            double y = SimpsonRule.IntegrateComposite(x => 1 / Math.Sqrt(2 * piGreco * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2)), a, b, 100000);
-            return y;
+            return SimpsonRule.IntegrateComposite(x => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2)), a, b, 100000);
         }
     }
 }
