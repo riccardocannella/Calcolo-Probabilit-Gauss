@@ -11,6 +11,7 @@ namespace Calcolo_Valori_Gauss
     {
         protected override void OnCreate(Bundle bundle)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             base.OnCreate(bundle);
             //<application android:label="Calcolo Valori Gauss" android:theme="@android:style/Theme.Material.Light.LightStatusBar"></application>
             // Set our view from the "main" layout resource
@@ -23,7 +24,11 @@ namespace Calcolo_Valori_Gauss
             {
                 risultato = EseguiParsing();
                 TextView TxtRisultato = FindViewById<TextView>(Resource.Id.txtRisultato);
-                TxtRisultato.Text = risultato.ToString();
+                //Se il risultato esiste stampalo altrimenti no
+                if (!risultato.ToString().Equals("NaN"))
+                    TxtRisultato.Text = risultato.ToString();
+                else
+                    TxtRisultato.Text = "";
             };
 
             Button btn = FindViewById<Button>(Resource.Id.button1);
@@ -37,18 +42,62 @@ namespace Calcolo_Valori_Gauss
         private double EseguiParsing()
         {
             EditText A = FindViewById<EditText>(Resource.Id.txtA);
-            double.TryParse(A.Text, out double a);
-
             EditText B = FindViewById<EditText>(Resource.Id.txtB);
+            EditText Mu = FindViewById<EditText>(Resource.Id.txtMu);
+            EditText Sigma = FindViewById<EditText>(Resource.Id.txtSigma);
+
+            if(A.Text.Equals("") || B.Text.Equals(""))
+            {
+                MessaggioDiErrore("Inserire valori mancanti");
+                return Double.NaN;
+            }
+
+
+            double.TryParse(A.Text, out double a);
             double.TryParse(B.Text, out double b);
 
-            EditText Mu = FindViewById<EditText>(Resource.Id.txtMu);
+            if (a > b)
+            {
+                FindViewById<EditText>(Resource.Id.txtA).Text = "";
+                FindViewById<EditText>(Resource.Id.txtB).Text = "";
+                MessaggioDiErrore("Estremo sinistro maggiore dell'estremo destro");
+                return Double.NaN;
+            }
+                
+
+            
             double.TryParse(Mu.Text, out double mu);
+            if (Mu.Text.Equals(""))
+            {
+                mu = 0;
+            }
 
-            EditText Sigma = FindViewById<EditText>(Resource.Id.txtSigma);
             double.TryParse(Sigma.Text, out double sigma);
+            if(Sigma.Text.Equals(""))
+            {
+                sigma = 1;
+            }
+            if(sigma == 0)
+            {
+                FindViewById<EditText>(Resource.Id.txtSigma).Text = "";
+                MessaggioDiErrore("σ non può essere uguale a 0");
+                return Double.NaN;
+            }
+                
 
+            
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
+        }
+
+        private void MessaggioDiErrore(string stringa)
+        {
+            new AlertDialog.Builder(this)
+                .SetTitle("Attenzione")
+                .SetMessage(stringa)
+                .SetNeutralButton("Ok",(senderAlert, args) => {
+                    //Non Fare niente
+                })
+                .Show();
         }
     }
 }
