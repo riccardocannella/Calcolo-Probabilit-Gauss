@@ -58,17 +58,16 @@ namespace Calcolo_Valori_Gauss
             EditText Mu = FindViewById<EditText>(Resource.Id.txtMu);
             EditText Sigma = FindViewById<EditText>(Resource.Id.txtSigma);
 
-            if (A.Text.Equals("") || B.Text.Equals(""))
-            {
-                MessaggioDiErrore("Inserire valori mancanti");
-                return Double.NaN;
-            }
+            if (A.Text.Equals(""))
+                a = double.NegativeInfinity;
+            else
+                double.TryParse(A.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out a);
+            if (B.Text.Equals(""))
+                b = double.PositiveInfinity;
+            else
+                double.TryParse(B.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out b);
 
-
-            double.TryParse(A.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out a);
-            double.TryParse(B.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out b);
-
-            if (a > b)
+            if (a > b && (a!=double.NegativeInfinity && b!=double.NegativeInfinity))
             {
                 FindViewById<EditText>(Resource.Id.txtA).Text = "";
                 FindViewById<EditText>(Resource.Id.txtB).Text = "";
@@ -76,14 +75,13 @@ namespace Calcolo_Valori_Gauss
                 return Double.NaN;
             }
 
-
-            double.TryParse(Mu.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out mu);
+            double.TryParse(Mu.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out mu);
             if (Mu.Text.Equals(""))
             {
                 mu = 0;
             }
 
-            double.TryParse(Sigma.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out sigma);
+            double.TryParse(Sigma.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out sigma);
             if (Sigma.Text.Equals(""))
             {
                 sigma = 1;

@@ -22,9 +22,6 @@ namespace Calcolo_Valori_Gauss
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            //Utilizzo notazione italiana
-            System.Threading.Thread.CurrentThread.CurrentCulture = newCulture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = newCulture;
             base.OnCreate(savedInstanceState);
 
             double mu = Intent.GetDoubleExtra("mu", 0.0);
@@ -63,19 +60,21 @@ namespace Calcolo_Valori_Gauss
             */
 
             // linea per colorare la porzione di funzione delimitata da a e b
-            var area = new FunctionSeries(fnDensita, a, b, 0.0001);
+            double aVero = Calcoli.ControllaInfiniti(a);
+            double bVero = Calcoli.ControllaInfiniti(b);
+            var area = new FunctionSeries(fnDensita, aVero, bVero, 0.0001);
             // linea verticale per il punto a
             var lineaA = new LineSeries();
-            lineaA.Points.Add(new DataPoint(a, 0));
-            lineaA.Points.Add(new DataPoint(a, fnDensita(a)));
+            lineaA.Points.Add(new DataPoint(aVero, 0));
+            lineaA.Points.Add(new DataPoint(aVero, fnDensita(a)));
             // linea verticale per il punto b
             var lineaB = new LineSeries();
-            lineaB.Points.Add(new DataPoint(b, 0));
-            lineaB.Points.Add(new DataPoint(b, fnDensita(b)));
+            lineaB.Points.Add(new DataPoint(bVero, 0));
+            lineaB.Points.Add(new DataPoint(bVero, fnDensita(b)));
             var lineaAsse = new LineSeries();
             //linea orizzontale da a a b
-            lineaAsse.Points.Add(new DataPoint(a, 0));
-            lineaAsse.Points.Add(new DataPoint(b, 0));
+            lineaAsse.Points.Add(new DataPoint(aVero, 0));
+            lineaAsse.Points.Add(new DataPoint(bVero, 0));
             // setto i colori per l'area
             area.Color = OxyColors.Black;
             lineaA.Color = OxyColors.Black;
