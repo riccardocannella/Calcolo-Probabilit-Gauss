@@ -31,16 +31,16 @@ namespace Calcolo_Valori_Gauss
             if (a == double.NegativeInfinity && b == double.PositiveInfinity) return 1;
             // -inf e valore
             if (a == double.NegativeInfinity)
-                if (b >= 0)
-                    return 0.5 + SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), 0, b, 100000);
+                if (b >= mu)
+                    return 0.5 + SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), mu, b, 100000);
                 else
-                    return 0.5 - SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), 0, -b, 100000);
+                    return 0.5 - SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), mu, -b, 100000);
             // valore e +inf
             else if (b == double.PositiveInfinity)
-                if (a >= 0)
-                    return 0.5 - SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), 0, a, 100000);
+                if (a >= mu)
+                    return 0.5 - SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), mu, a, 100000);
                 else
-                    return 0.5 + SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), 0, -a, 100000);
+                    return 0.5 + SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), mu, -a, 100000);
 
             return SimpsonRule.IntegrateComposite(funzioneDensita(mu, sigma), a, b, 100000);
         }
@@ -84,7 +84,7 @@ namespace Calcolo_Valori_Gauss
             lineaAsse.Color = OxyColors.Black;
             // aggiungo tutte le linee 
             model.Series.Add(area);
-            model.Series[1].Title = "Area";
+            model.Series[1].Title = "Area = " + CalcolaIntegrale(a,b,sigma,mu);
             model.IsLegendVisible = true;
             // model.Series.Add(lineaCentro);
             model.Series.Add(lineaA);
