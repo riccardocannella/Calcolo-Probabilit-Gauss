@@ -26,6 +26,7 @@ namespace Calcolo_Valori_Gauss
             double risultato = double.NaN;
             BtnCalcola.Click += (object sender, EventArgs e) =>
             {
+                NascondiTastiera();
                 risultato = EseguiParsing();
                 TextView TxtRisultato = FindViewById<TextView>(Resource.Id.txtRisultato);
                 //Se il risultato esiste stampalo altrimenti no
@@ -33,13 +34,12 @@ namespace Calcolo_Valori_Gauss
                     TxtRisultato.Text = risultato.ToString();
                 else
                     TxtRisultato.Text = "";
-
-                NascondiTastiera();
             };
 
             Button btn = FindViewById<Button>(Resource.Id.button1);
             btn.Click += (object sender, EventArgs e) =>
             {
+                NascondiTastiera();
                 var intent = new Intent(this, typeof(GraphLayoutActivity));
                 EseguiParsing();
                 intent.PutExtra("mu", mu);
@@ -47,8 +47,6 @@ namespace Calcolo_Valori_Gauss
                 intent.PutExtra("a", a);
                 intent.PutExtra("b", b);
                 StartActivity(intent);
-
-                NascondiTastiera();
             };
             
         }
@@ -77,7 +75,6 @@ namespace Calcolo_Valori_Gauss
                 MessaggioDiErrore("Estremo sinistro maggiore dell'estremo destro");
                 return Double.NaN;
             }
-
 
 
             double.TryParse(Mu.Text, out mu);

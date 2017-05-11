@@ -16,7 +16,7 @@ using OxyPlot.Series;
 
 namespace Calcolo_Valori_Gauss
 {
-    [Activity(Label = "GraphLayoutActivity")]
+    [Activity(Label = "Grafico dell'Area")]
     public class GraphLayoutActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -41,11 +41,12 @@ namespace Calcolo_Valori_Gauss
 
         private PlotModel CreatePlotModel(double a = double.NaN, double b = double.NaN, double mu = 0.0, double sigma = 1.0)
         {
-            var model = new PlotModel { Title = "Grafico della distribuzione" };
+            var model = new PlotModel {  };
 
             Func<double, double> fnDensita = (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
 
             model.Series.Add(new FunctionSeries(fnDensita, (mu - 5 * sigma), (mu + 5 * sigma), 0.0001) { Color=OxyColors.Red, Background = OxyColor.FromRgb(220,220,220) });
+
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1, AbsoluteMinimum = 0 });
 
@@ -78,6 +79,8 @@ namespace Calcolo_Valori_Gauss
             lineaAsse.Color = OxyColors.Black;
             // aggiungo tutte le linee 
             model.Series.Add(area);
+            model.Series[1].Title = "Area";
+            model.IsLegendVisible = true;
             // model.Series.Add(lineaCentro);
             model.Series.Add(lineaA);
             model.Series.Add(lineaB);

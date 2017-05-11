@@ -57,7 +57,8 @@
         android:inputType="numberSigned|numberDecimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtMu" />
+        android:id="@+id/txtMu"
+        android:text="0" />
     <TextView
         android:text="σ"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -68,7 +69,8 @@
         android:inputType="numberDecimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtSigma" />
+        android:id="@+id/txtSigma"
+        android:text="1" />
     <Button
         android:text="Calcola"
         android:layout_width="match_parent"
@@ -83,7 +85,7 @@
         android:id="@+id/txtRisultato"
         android:visibility="visible" />
     <Button
-        android:text="Button"
+        android:text="Visualizza grafico"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button1"
