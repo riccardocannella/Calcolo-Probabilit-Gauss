@@ -9,6 +9,7 @@ namespace Calcolo_Valori_Gauss
     [Activity(Label = "Calcolo Valori Gauss", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
+        private double mu, sigma, a, b;
         protected override void OnCreate(Bundle bundle)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -34,7 +35,12 @@ namespace Calcolo_Valori_Gauss
             Button btn = FindViewById<Button>(Resource.Id.button1);
             btn.Click += (object sender, EventArgs e) =>
             {
+                EseguiParsing();
                 var intent = new Intent(this, typeof(GraphLayoutActivity));
+                intent.PutExtra("mu", mu);
+                intent.PutExtra("sigma", sigma);
+                intent.PutExtra("a", a);
+                intent.PutExtra("b", b);
                 StartActivity(intent);
             };
         }
@@ -52,9 +58,8 @@ namespace Calcolo_Valori_Gauss
                 return Double.NaN;
             }
 
-
-            double.TryParse(A.Text, out double a);
-            double.TryParse(B.Text, out double b);
+            double.TryParse(A.Text, out a);
+            double.TryParse(B.Text, out b);
 
             if (a > b)
             {
@@ -66,13 +71,13 @@ namespace Calcolo_Valori_Gauss
                 
 
             
-            double.TryParse(Mu.Text, out double mu);
+            double.TryParse(Mu.Text, out mu);
             if (Mu.Text.Equals(""))
             {
                 mu = 0;
             }
 
-            double.TryParse(Sigma.Text, out double sigma);
+            double.TryParse(Sigma.Text, out sigma);
             if(Sigma.Text.Equals(""))
             {
                 sigma = 1;

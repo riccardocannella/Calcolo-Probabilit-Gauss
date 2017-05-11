@@ -22,8 +22,14 @@ namespace Calcolo_Valori_Gauss
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            
+            double mu = Intent.GetDoubleExtra("mu", 0.0);
+            double sigma = Intent.GetDoubleExtra("sigma", 2.0);
+            double a = Intent.GetDoubleExtra("a", 0.0);
+            double b = Intent.GetDoubleExtra("b", 0.0);
+
             var plotView = new PlotView(this);
-            plotView.Model = CreatePlotModel();
+            plotView.Model = CreatePlotModel(mu, sigma);
             SetContentView(Resource.Layout.GraphLayout);
             this.AddContentView(plotView,
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent));
@@ -33,23 +39,16 @@ namespace Calcolo_Valori_Gauss
 
         }
 
-        private PlotModel CreatePlotModel()
+        private PlotModel CreatePlotModel(double a = double.NaN, double b = double.NaN, double mu = 0.0, double sigma = 1.0)
         {
-            var model = new PlotModel { Title = "Fun with Bats" };
+            var model = new PlotModel { Title = "Grafico della distribuzione" };
 
-            Func<double, double> batFn1 = (x) => 2 * Math.Sqrt(-Math.Abs(Math.Abs(x) - 1) * Math.Abs(3 - Math.Abs(x)) / ((Math.Abs(x) - 1) * (3 - Math.Abs(x)))) * (1 + Math.Abs(Math.Abs(x) - 3) / (Math.Abs(x) - 3)) * Math.Sqrt(1 - Math.Pow((x / 7), 2)) + (5 + 0.97 * (Math.Abs(x - 0.5) + Math.Abs(x + 0.5)) - 3 * (Math.Abs(x - 0.75) + Math.Abs(x + 0.75))) * (1 + Math.Abs(1 - Math.Abs(x)) / (1 - Math.Abs(x)));
-            Func<double, double> batFn2 = (x) => -3 * Math.Sqrt(1 - Math.Pow((x / 7), 2)) * Math.Sqrt(Math.Abs(Math.Abs(x) - 4) / (Math.Abs(x) - 4));
-            Func<double, double> batFn3 = (x) => Math.Abs(x / 2) - 0.0913722 * (Math.Pow(x, 2)) - 3 + Math.Sqrt(1 - Math.Pow((Math.Abs(Math.Abs(x) - 2) - 1), 2));
-            Func<double, double> batFn4 = (x) => (2.71052 + (1.5 - .5 * Math.Abs(x)) - 1.35526 * Math.Sqrt(4 - Math.Pow((Math.Abs(x) - 1), 2))) * Math.Sqrt(Math.Abs(Math.Abs(x) - 1) / (Math.Abs(x) - 1)) + 0.9;
+            Func<double, double> fnGauss = (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
 
-            model.Series.Add(new FunctionSeries(batFn1, -8, 8, 0.0001));
-            model.Series.Add(new FunctionSeries(batFn2, -8, 8, 0.0001));
-            model.Series.Add(new FunctionSeries(batFn3, -8, 8, 0.0001));
-            model.Series.Add(new FunctionSeries(batFn4, -8, 8, 0.0001));
-
+            model.Series.Add(new FunctionSeries(fnGauss, (mu -5*sigma), (mu + 5*sigma), 0.0001));
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1 });
-
+            model.Axes[1].AbsoluteMinimum = 0;
             model.InvalidatePlot(true);
             return model;
         }
