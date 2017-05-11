@@ -3,6 +3,8 @@ using Android.Widget;
 using Android.OS;
 using System;
 using Android.Content;
+using Android.Views;
+using Android.Views.InputMethods;
 
 namespace Calcolo_Valori_Gauss
 {
@@ -31,6 +33,8 @@ namespace Calcolo_Valori_Gauss
                     TxtRisultato.Text = risultato.ToString();
                 else
                     TxtRisultato.Text = "";
+
+                NascondiTastiera();
             };
 
             Button btn = FindViewById<Button>(Resource.Id.button1);
@@ -43,7 +47,10 @@ namespace Calcolo_Valori_Gauss
                 intent.PutExtra("a", a);
                 intent.PutExtra("b", b);
                 StartActivity(intent);
+
+                NascondiTastiera();
             };
+            
         }
 
         private double EseguiParsing()
@@ -94,6 +101,12 @@ namespace Calcolo_Valori_Gauss
 
 
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
+        }
+
+        private void NascondiTastiera()
+        {
+            InputMethodManager inputManager = (InputMethodManager)this.GetSystemService(Context.InputMethodService);
+            inputManager.HideSoftInputFromWindow(this.CurrentFocus.WindowToken, HideSoftInputFlags.NotAlways);
         }
 
         private void MessaggioDiErrore(string stringa)
