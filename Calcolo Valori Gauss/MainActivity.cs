@@ -42,12 +42,15 @@ namespace Calcolo_Valori_Gauss
             {
                 NascondiTastiera();
                 var intent = new Intent(this, typeof(GraphLayoutActivity));
-                EseguiParsing();
+                double provaParse = EseguiParsing();
+                if (provaParse.Equals(double.NaN)) { }
+                else { 
                 intent.PutExtra("mu", mu);
                 intent.PutExtra("sigma", sigma);
                 intent.PutExtra("a", a);
                 intent.PutExtra("b", b);
                 StartActivity(intent);
+                }
             };
         }
 

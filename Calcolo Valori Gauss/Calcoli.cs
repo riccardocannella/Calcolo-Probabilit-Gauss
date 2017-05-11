@@ -45,11 +45,9 @@ namespace Calcolo_Valori_Gauss
             return SimpsonRule.IntegrateComposite(x => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2)), a, b, 100000);
         }
 
-        public static double ControllaInfiniti(double valore)
+        public static Func<double, double> funzioneDensita(double mu, double sigma)
         {
-            if (valore == double.PositiveInfinity) return (double)int.MaxValue;
-            else if (valore == double.NegativeInfinity) return (double)int.MinValue;
-            return valore;
+            return (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
         }
     }
 }

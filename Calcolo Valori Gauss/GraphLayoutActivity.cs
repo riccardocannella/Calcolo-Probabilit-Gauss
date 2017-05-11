@@ -40,28 +40,23 @@ namespace Calcolo_Valori_Gauss
 
         }
 
-        private PlotModel CreatePlotModel(double a = double.NaN, double b = double.NaN, double mu = 0.0, double sigma = 1.0)
+        private PlotModel CreatePlotModel(double a, double b, double mu, double sigma)
         {
-            var model = new PlotModel {  };
-
-            Func<double, double> fnDensita = (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
-
-            model.Series.Add(new FunctionSeries(fnDensita, (mu - 5 * sigma), (mu + 5 * sigma), 0.0001) { Color=OxyColors.Red, Background = OxyColor.FromRgb(220,220,220) });
+            var model = new PlotModel { };
+            var fnDensita = Calcoli.funzioneDensita(mu, sigma);
+            model.Series.Add(new FunctionSeries(fnDensita, (mu - 5 * sigma), (mu + 5 * sigma), 0.0001) { Color = OxyColors.Red, Background = OxyColor.FromRgb(220, 220, 220) });
 
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1, AbsoluteMinimum = 0 });
 
-            // linea per il centro della curva
-            /*var lineaCentro = new LineSeries();
-            lineaCentro.LineStyle = LineStyle.Dash;
-            lineaCentro.Points.Add(new DataPoint(mu, 0));
-            lineaCentro.Points.Add(new DataPoint(mu, fnDensita(mu)+0.1));
-            lineaCentro.Color = OxyColors.Gray;
-            */
 
             // linea per colorare la porzione di funzione delimitata da a e b
-            double aVero = Calcoli.ControllaInfiniti(a);
-            double bVero = Calcoli.ControllaInfiniti(b);
+            double aVero, bVero;
+            if (a.Equals(double.NegativeInfinity)) aVero = mu - 5 * sigma;
+            else aVero = a;
+            if (b.Equals(double.PositiveInfinity)) bVero = mu + 5 * sigma;
+            else bVero = b;
+
             var area = new FunctionSeries(fnDensita, aVero, bVero, 0.0001);
             // linea verticale per il punto a
             var lineaA = new LineSeries();
@@ -88,7 +83,7 @@ namespace Calcolo_Valori_Gauss
             model.Series.Add(lineaA);
             model.Series.Add(lineaB);
             model.Series.Add(lineaAsse);
-            
+
             model.InvalidatePlot(true);
             return model;
         }
