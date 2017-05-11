@@ -22,39 +22,36 @@ namespace Calcolo_Valori_Gauss
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            var plotView = new PlotView(this);
+            plotView.Model = CreatePlotModel();
             SetContentView(Resource.Layout.GraphLayout);
+            this.AddContentView(plotView,
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent));
             // Create your application here
-            PlotView view = FindViewById<PlotView>(Resource.Id.plot_view);
-            view.Model = Calcoli.CreatePlotModel();
-            
+            //PlotView view = FindViewById<PlotView>(Resource.Id.plot_view);
+            //view.Model = Calcoli.CreatePlotModel();
+
         }
 
         private PlotModel CreatePlotModel()
         {
-            var plotModel = new PlotModel { Title = "OxyPlot Demo" };
+            var model = new PlotModel { Title = "Fun with Bats" };
 
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.None, Maximum = 10, Minimum = 0 });
+            Func<double, double> batFn1 = (x) => 2 * Math.Sqrt(-Math.Abs(Math.Abs(x) - 1) * Math.Abs(3 - Math.Abs(x)) / ((Math.Abs(x) - 1) * (3 - Math.Abs(x)))) * (1 + Math.Abs(Math.Abs(x) - 3) / (Math.Abs(x) - 3)) * Math.Sqrt(1 - Math.Pow((x / 7), 2)) + (5 + 0.97 * (Math.Abs(x - 0.5) + Math.Abs(x + 0.5)) - 3 * (Math.Abs(x - 0.75) + Math.Abs(x + 0.75))) * (1 + Math.Abs(1 - Math.Abs(x)) / (1 - Math.Abs(x)));
+            Func<double, double> batFn2 = (x) => -3 * Math.Sqrt(1 - Math.Pow((x / 7), 2)) * Math.Sqrt(Math.Abs(Math.Abs(x) - 4) / (Math.Abs(x) - 4));
+            Func<double, double> batFn3 = (x) => Math.Abs(x / 2) - 0.0913722 * (Math.Pow(x, 2)) - 3 + Math.Sqrt(1 - Math.Pow((Math.Abs(Math.Abs(x) - 2) - 1), 2));
+            Func<double, double> batFn4 = (x) => (2.71052 + (1.5 - .5 * Math.Abs(x)) - 1.35526 * Math.Sqrt(4 - Math.Pow((Math.Abs(x) - 1), 2))) * Math.Sqrt(Math.Abs(Math.Abs(x) - 1) / (Math.Abs(x) - 1)) + 0.9;
 
-            var series1 = new LineSeries
-            {
-                MarkerType = MarkerType.Square,
-                StrokeThickness = 1,
-                Smooth = false,
-                Color = OxyColors.Black
-            };
+            model.Series.Add(new FunctionSeries(batFn1, -8, 8, 0.0001));
+            model.Series.Add(new FunctionSeries(batFn2, -8, 8, 0.0001));
+            model.Series.Add(new FunctionSeries(batFn3, -8, 8, 0.0001));
+            model.Series.Add(new FunctionSeries(batFn4, -8, 8, 0.0001));
 
-            series1.Points.Add(new DataPoint(0.0, 6.0));
-            series1.Points.Add(new DataPoint(9.2, 2.1));
-            series1.Points.Add(new DataPoint(2.0, 4.2));
-            series1.Points.Add(new DataPoint(3.3, 8.9));
-            series1.Points.Add(new DataPoint(4.7, 7.4));
-            series1.Points.Add(new DataPoint(6.0, 6.2));
-            series1.Points.Add(new DataPoint(0.0, 0.0));
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1 });
 
-            plotModel.Series.Add(series1);
-            plotModel.InvalidatePlot(true);
-            return plotModel;
+            model.InvalidatePlot(true);
+            return model;
         }
     }
 }
