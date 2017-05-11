@@ -44,12 +44,13 @@ namespace Calcolo_Valori_Gauss
                 var intent = new Intent(this, typeof(GraphLayoutActivity));
                 double provaParse = EseguiParsing();
                 if (provaParse.Equals(double.NaN)) { }
-                else { 
-                intent.PutExtra("mu", mu);
-                intent.PutExtra("sigma", sigma);
-                intent.PutExtra("a", a);
-                intent.PutExtra("b", b);
-                StartActivity(intent);
+                else
+                {
+                    intent.PutExtra("mu", mu);
+                    intent.PutExtra("sigma", sigma);
+                    intent.PutExtra("a", a);
+                    intent.PutExtra("b", b);
+                    StartActivity(intent);
                 }
             };
         }
@@ -64,13 +65,25 @@ namespace Calcolo_Valori_Gauss
             if (A.Text.Equals(""))
                 a = double.NegativeInfinity;
             else
+                if (A.Text.Equals("-") || A.Text.Equals(".") || A.Text.Equals("-.")) {
+                FindViewById<EditText>(Resource.Id.txtA).Text = "";
+                MessaggioDiErrore("Estremo sinistro non valido");
+                return Double.NaN; }
+            else
                 double.TryParse(A.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out a);
             if (B.Text.Equals(""))
                 b = double.PositiveInfinity;
             else
+                if (B.Text.Equals("-") || B.Text.Equals(".") || B.Text.Equals("-."))
+            {
+                FindViewById<EditText>(Resource.Id.txtB).Text = "";
+                MessaggioDiErrore("Estremo destro non valido");
+                return Double.NaN;
+            }
+            else
                 double.TryParse(B.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out b);
 
-            if (a > b && (a!=double.NegativeInfinity && b!=double.NegativeInfinity))
+            if (a > b && (a != double.NegativeInfinity && b != double.NegativeInfinity))
             {
                 FindViewById<EditText>(Resource.Id.txtA).Text = "";
                 FindViewById<EditText>(Resource.Id.txtB).Text = "";
@@ -95,7 +108,7 @@ namespace Calcolo_Valori_Gauss
                 MessaggioDiErrore("σ non può essere uguale a 0");
                 return Double.NaN;
             }
-          
+
 
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
         }
@@ -111,7 +124,8 @@ namespace Calcolo_Valori_Gauss
             new AlertDialog.Builder(this)
                 .SetTitle("Attenzione")
                 .SetMessage(stringa)
-                .SetNeutralButton("Ok", (senderAlert, args) => {
+                .SetNeutralButton("Ok", (senderAlert, args) =>
+                {
                     //Non Fare niente
                 })
                 .Show();
