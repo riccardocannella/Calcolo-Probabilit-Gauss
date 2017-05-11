@@ -42,7 +42,7 @@ namespace Calcolo_Valori_Gauss
         private PlotModel CreatePlotModel(double a = double.NaN, double b = double.NaN, double mu = 0.0, double sigma = 1.0)
         {
             var model = new PlotModel { Title = "Grafico della distribuzione" };
-<<<<<<< Updated upstream
+
 
             Func<double, double> fnGauss = (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
 
@@ -50,7 +50,7 @@ namespace Calcolo_Valori_Gauss
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1 });
             model.Axes[1].AbsoluteMinimum = 0;
-=======
+
             // questa funzione è la funzione di densità della distribuzione normale
             Func<double, double> fnDensita = (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
             // creo la linea della funzione con dei limiti ampi a sufficienza
@@ -82,7 +82,8 @@ namespace Calcolo_Valori_Gauss
             model.Series.Add(lineaB);
             model.Series.Add(lineaAsse);
             // impongo al grafico di ridisegnarsi
->>>>>>> Stashed changes
+
+            //TODO NON FAR SPOSTARE IL GRAFICO E NASCONDERE TASTSTIER
             model.InvalidatePlot(true);
             return model;
         }
