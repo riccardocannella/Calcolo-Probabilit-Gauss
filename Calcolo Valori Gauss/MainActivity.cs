@@ -5,6 +5,7 @@ using System;
 using Android.Content;
 using Android.Views;
 using Android.Views.InputMethods;
+using System.Globalization;
 
 namespace Calcolo_Valori_Gauss
 {
@@ -48,7 +49,6 @@ namespace Calcolo_Valori_Gauss
                 intent.PutExtra("b", b);
                 StartActivity(intent);
             };
-            
         }
 
         private double EseguiParsing()
@@ -65,8 +65,8 @@ namespace Calcolo_Valori_Gauss
             }
 
 
-            double.TryParse(A.Text, out a);
-            double.TryParse(B.Text, out b);
+            double.TryParse(A.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out a);
+            double.TryParse(B.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out b);
 
             if (a > b)
             {
@@ -77,13 +77,13 @@ namespace Calcolo_Valori_Gauss
             }
 
 
-            double.TryParse(Mu.Text, out mu);
+            double.TryParse(Mu.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out mu);
             if (Mu.Text.Equals(""))
             {
                 mu = 0;
             }
 
-            double.TryParse(Sigma.Text, out sigma);
+            double.TryParse(Sigma.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out sigma);
             if (Sigma.Text.Equals(""))
             {
                 sigma = 1;
@@ -94,8 +94,7 @@ namespace Calcolo_Valori_Gauss
                 MessaggioDiErrore("σ non può essere uguale a 0");
                 return Double.NaN;
             }
-
-
+          
 
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
         }

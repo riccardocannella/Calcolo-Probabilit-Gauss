@@ -13,6 +13,7 @@ using OxyPlot.Xamarin.Android;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using System.Globalization;
 
 namespace Calcolo_Valori_Gauss
 {
@@ -21,6 +22,9 @@ namespace Calcolo_Valori_Gauss
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            //Utilizzo notazione italiana
+            System.Threading.Thread.CurrentThread.CurrentCulture = newCulture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = newCulture;
             base.OnCreate(savedInstanceState);
 
             double mu = Intent.GetDoubleExtra("mu", 0.0);
@@ -85,6 +89,7 @@ namespace Calcolo_Valori_Gauss
             model.Series.Add(lineaA);
             model.Series.Add(lineaB);
             model.Series.Add(lineaAsse);
+            
             model.InvalidatePlot(true);
             return model;
         }
