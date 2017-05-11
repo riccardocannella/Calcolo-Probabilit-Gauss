@@ -43,18 +43,10 @@ namespace Calcolo_Valori_Gauss
         {
             var model = new PlotModel { Title = "Grafico della distribuzione" };
 
-
-            Func<double, double> fnGauss = (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
-
-            model.Series.Add(new FunctionSeries(fnGauss, (mu -5*sigma), (mu + 5*sigma), 0.0001));
-            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
-            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1 });
-            model.Axes[1].AbsoluteMinimum = 0;
-
-            // questa funzione è la funzione di densità della distribuzione normale
+            // questa funzione è la funzione di densità della distribuzione 
             Func<double, double> fnDensita = (x) => 1 / Math.Sqrt(2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-0.5 * Math.Pow((x - mu) / sigma, 2));
             // creo la linea della funzione con dei limiti ampi a sufficienza
-            model.Series.Add(new FunctionSeries(fnDensita, (mu - 5 * sigma), (mu + 5 * sigma), 0.0001) { Color = OxyColors.OrangeRed, Background=OxyColor.FromRgb(220, 220, 220)});
+            model.Series.Add(new FunctionSeries(fnDensita, (mu - 5 * sigma), (mu + 5 * sigma), 0.0001) { Color = OxyColors.OrangeRed, Background = OxyColor.FromRgb(220, 220, 220) });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1, AbsoluteMinimum = 0 });
             // linea per colorare la porzione di funzione delimitata da a e b
