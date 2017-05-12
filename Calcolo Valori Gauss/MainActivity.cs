@@ -22,10 +22,11 @@ using Android.Content;
 using Android.Views;
 using Android.Views.InputMethods;
 using System.Globalization;
+using Android.Content.PM;
 
 namespace Calcolo_Valori_Gauss
 {
-    [Activity(Label = "Calcolo Valori Gauss", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Calcolo Valori Gauss", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
         private double mu, sigma, a, b;
@@ -34,7 +35,6 @@ namespace Calcolo_Valori_Gauss
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             base.OnCreate(bundle);
-            //<application android:label="Calcolo Valori Gauss" android:theme="@android:style/Theme.Material.Light.LightStatusBar"></application>
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 

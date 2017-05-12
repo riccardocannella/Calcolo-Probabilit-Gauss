@@ -29,10 +29,11 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Globalization;
+using Android.Content.PM;
 
 namespace Calcolo_Valori_Gauss
 {
-    [Activity(Label = "Grafico dell'Area")]
+    [Activity(Label = "Grafico dell'Area", ScreenOrientation = ScreenOrientation.Portrait)]
     public class GraphLayoutActivity : Activity
     {
         double mu, sigma, a, b;
