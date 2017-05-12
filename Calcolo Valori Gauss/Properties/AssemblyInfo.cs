@@ -31,6 +31,11 @@ using Android.App;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
+#if DEBUG
+[assembly: Application(Debuggable = true, Icon = "@drawable/icon")]
+#else
+[assembly: Application(Debuggable=false, Icon = "@drawable/icon")]
+#endif
 
 // Version information for an assembly consists of the following four values:
 //
