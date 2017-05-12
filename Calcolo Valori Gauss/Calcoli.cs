@@ -79,7 +79,7 @@ namespace Calcolo_Valori_Gauss
             var model = new PlotModel { };
             var fnDensita = Calcoli.funzioneDensita(mu, sigma);
             // aggiungo al model la funzione di distribuzione
-            model.Series.Add(new FunctionSeries(fnDensita, (mu - 5 * sigma), (mu + 5 * sigma), 0.0001) { Color = OxyColors.Red, Background = OxyColor.FromRgb(220, 220, 220) });
+            model.Series.Add(new FunctionSeries(fnDensita, (mu - 5 * sigma), (mu + 5 * sigma), 0.1) { Color = OxyColors.Red, Background = OxyColor.FromRgb(220, 220, 220) });
             // aggiungo un titolo e visualizzo la legenda
             model.Series[0].Title = "Fn Densità, µ = " + mu + ", σ = " + sigma;
             model.IsLegendVisible = true;
