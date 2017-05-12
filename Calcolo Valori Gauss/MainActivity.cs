@@ -32,15 +32,14 @@ namespace Calcolo_Valori_Gauss
         private double mu, sigma, a, b;
         protected override void OnCreate(Bundle bundle)
         {
-
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             base.OnCreate(bundle);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
-
+            // catturo il bottone per calcolare l'area
             Button BtnCalcola = FindViewById<Button>(Resource.Id.btnCalcola);
-
             double risultato = double.NaN;
+            // mi iscrivo all'evento click
             BtnCalcola.Click += (object sender, EventArgs e) =>
             {
                 NascondiTastiera();
@@ -70,7 +69,10 @@ namespace Calcolo_Valori_Gauss
                 }
             };
         }
-
+        /// <summary>
+        /// Metodo privato per convertire tutti i testi in valori double
+        /// </summary>
+        /// <returns>Il valore dell'area dell'integrale, o NaN se non è possibile calcolarla</returns>
         private double EseguiParsing()
         {
             EditText A = FindViewById<EditText>(Resource.Id.txtA);
@@ -124,17 +126,20 @@ namespace Calcolo_Valori_Gauss
                 MessaggioDiErrore("σ non può essere uguale a 0");
                 return Double.NaN;
             }
-
-
             return Calcoli.CalcolaIntegrale(a, b, sigma, mu);
         }
-
+        /// <summary>
+        /// Metodo privato per nascondere la tastiera
+        /// </summary>
         private void NascondiTastiera()
         {
             InputMethodManager inputManager = (InputMethodManager)this.GetSystemService(Context.InputMethodService);
             inputManager.HideSoftInputFromWindow(this.CurrentFocus.WindowToken, HideSoftInputFlags.NotAlways);
         }
-
+        /// <summary>
+        /// Metodo privato per generare degli alert di errore personalizzati
+        /// </summary>
+        /// <param name="stringa">Il messaggio di errore da visualizzare</param>
         private void MessaggioDiErrore(string stringa)
         {
             new AlertDialog.Builder(this)

@@ -40,23 +40,32 @@ namespace Calcolo_Valori_Gauss
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            // vado a catturare le variabili
             SetVariabili();
+            // aggiungo il controllo per il grafico
             var plotView = new PlotView(this);
+            // aggiungo il grafico al controllo
             plotView.Model = Calcoli.CreatePlotModel(a, b, mu, sigma);
+            // inizializzo la view
             SetContentView(Resource.Layout.GraphLayout);
+            // aggiungo il grafico nella view
             this.AddContentView(plotView,
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent));
-            // Create your application here
-            //PlotView view = FindViewById<PlotView>(Resource.Id.plot_view);
-            //view.Model = Calcoli.CreatePlotModel();
-
         }
+        /// <summary>
+        /// Metodo privato che va a catturare le variabili necessarie al disegno del grafico.
+        /// Queste variabili sono state passate da un'altra Activity.
+        /// </summary>
         private void SetVariabili()
         {
+            // se non trovo mu la setto a 0 per avere la distribuzione standard
             mu = Intent.GetDoubleExtra("mu", 0.0);
+            // se non trovo sigma la setto a 0 per avere la distribuzione standard
             sigma = Intent.GetDoubleExtra("sigma", 1.0);
-            a = Intent.GetDoubleExtra("a", double.NaN);
-            b = Intent.GetDoubleExtra("b", double.NaN);
+            // se non trovo a la setto a meno infinito forzosamente
+            a = Intent.GetDoubleExtra("a", double.NegativeInfinity);
+            // se non trovo b la setto a più infinito forzosamente
+            b = Intent.GetDoubleExtra("b", double.PositiveInfinity);
         }
         
     }
