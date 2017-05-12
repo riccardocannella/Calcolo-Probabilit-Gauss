@@ -1,8 +1,24 @@
-﻿using System;
+﻿/*
+ Calcolo Valori Gauss - Un'app per calcolare l'area in un certo intervallo
+ della funzione di distribuzione di probabilità di Gauss.
+ Copyright (c) VIRICO 2017
+
+ This program is free software: you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation, either version 3 of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with
+ this program. If not, see http://www.gnu.org/licenses/.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -18,17 +34,22 @@ namespace Calcolo_Valori_Gauss
 {
     class Calcoli
     {
-        /*
-         Funzione che calcola l'integrale della funzione di densità di probabilità gaussiana, vuole 4 parametri:
-            - a: estremo sinistro dell'integrale
-            - b: estremo destro dell'integrale
-            - sigma: scarto quadratico medio (1 di default)
-            - mu : media (0 di default)
-         */
+
+        /// <summary>
+        /// Funzione che calcola l'integrale tra a e b della funzione di densità di probabilità.
+        /// </summary>
+        /// <param name="a">L'estremo sinistro dell'intervallo. Può anche essere -∞.</param>
+        /// <param name="b">L'estremo destro dell'intervallo. Può anche essere +∞.</param>
+        /// <param name="sigma">Lo scarto quadratico medio. Se non passato, di default è 1.</param>
+        /// <param name="mu">La media. Se non passata, di default è 0.</param>
+        /// <returns>Il valore dell'area</returns>
         public static double CalcolaIntegrale(double a, double b, double sigma = 1, double mu = 0)
         {
-            // - e + inf
-            if (a == double.NegativeInfinity && b == double.PositiveInfinity) return 1;
+            //check condizioni di operabilità
+            if (a > b || a.Equals(double.PositiveInfinity) || b.Equals(double.NegativeInfinity) || sigma < 0 || mu < 0)
+                return double.NaN;
+                // - e + inf
+                if (a == double.NegativeInfinity && b == double.PositiveInfinity) return 1;
             // -inf e valore
             if (a == double.NegativeInfinity)
                 if (b >= mu)
@@ -84,7 +105,7 @@ namespace Calcolo_Valori_Gauss
             lineaAsse.Color = OxyColors.Black;
             // aggiungo tutte le linee 
             model.Series.Add(area);
-            model.Series[1].Title = "Area = " + CalcolaIntegrale(a,b,sigma,mu);
+            model.Series[1].Title = "Area = " + CalcolaIntegrale(a, b, sigma, mu);
             model.IsLegendVisible = true;
             // model.Series.Add(lineaCentro);
             model.Series.Add(lineaA);
