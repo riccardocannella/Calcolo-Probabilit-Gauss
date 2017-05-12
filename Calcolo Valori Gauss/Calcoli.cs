@@ -125,7 +125,11 @@ namespace Calcolo_Valori_Gauss
             model.Series.Add(lineaB);
             model.Series.Add(lineaAsse);
             // aggiungo la legenda per l'area
-            model.Series[1].Title = "Area = " + CalcolaIntegrale(a, b, sigma, mu);
+            double risultatoArea = CalcolaIntegrale(a, b, sigma, mu);
+            string legendaArea = "Area = " + ((risultatoArea.Equals(1) || risultatoArea.ToString().Length < 7) 
+                ? risultatoArea.ToString() 
+                : risultatoArea.ToString().Substring(0, 7));
+            model.Series[1].Title = legendaArea;
             // forzo il grafico a ridisegnarsi
             model.InvalidatePlot(true);
             // ritorno il grafico

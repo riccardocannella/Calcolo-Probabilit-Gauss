@@ -46,8 +46,11 @@ namespace Calcolo_Valori_Gauss
                 risultato = EseguiParsing();
                 TextView TxtRisultato = FindViewById<TextView>(Resource.Id.txtRisultato);
                 //Se il risultato esiste stampalo altrimenti no
-                if (!risultato.ToString().Equals("NaN"))
-                    TxtRisultato.Text = risultato.ToString();
+                if (!risultato.Equals(double.NaN))
+                    if (risultato.Equals(1) || risultato.ToString().Length < 7)
+                        TxtRisultato.Text = "Area = " + risultato.ToString();
+                    else
+                        TxtRisultato.Text = "Area = " + risultato.ToString().Substring(0, 7);
                 else
                     TxtRisultato.Text = "";
             };
@@ -83,10 +86,12 @@ namespace Calcolo_Valori_Gauss
             if (A.Text.Equals(""))
                 a = double.NegativeInfinity;
             else
-                if (A.Text.Equals("-") || A.Text.Equals(".") || A.Text.Equals("-.")) {
+                if (A.Text.Equals("-") || A.Text.Equals(".") || A.Text.Equals("-."))
+            {
                 FindViewById<EditText>(Resource.Id.txtA).Text = "";
                 MessaggioDiErrore("Estremo sinistro non valido");
-                return Double.NaN; }
+                return Double.NaN;
+            }
             else
                 double.TryParse(A.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out a);
             if (B.Text.Equals(""))
