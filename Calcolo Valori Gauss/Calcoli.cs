@@ -74,8 +74,8 @@ namespace Calcolo_Valori_Gauss
             model.Series[0].Title = "Fn Densità, µ = " + mu + ", σ = " + sigma;
             model.IsLegendVisible = true;
 
-            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
-            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1, AbsoluteMinimum = 0 });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1, IsZoomEnabled = false, IsPanEnabled = false });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1, AbsoluteMinimum = 0, IsZoomEnabled = false, IsPanEnabled = false });
 
 
             // linea per colorare la porzione di funzione delimitata da a e b
