@@ -9,3 +9,7 @@ Inoltre permette di visualizzare graficamente la funzione di distribuzione (l'im
 
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Normal_Distribution_PDF.svg/360px-Normal_Distribution_PDF.svg.png "Funzione di Distribuzione")
 
+Autori:
+- Cannella Riccardo
+- Petrelli Corrado
+- Cipriani Vittorio
